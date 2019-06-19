@@ -1,6 +1,3 @@
-import random
-from datetime import datetime
-
 from board import Board
 from state import State
 from player import Player
@@ -17,10 +14,8 @@ def main():
         node = Node(state=state)
         tree = Mcts(root=node)
 
-        # __import__('ipdb').set_trace()
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
         b = tree.find_next_move(7000)
-        # __import__('ipdb').set_trace()
         state = State(board=b, player=state.player)
         print("TURN\n")
         b.print()
