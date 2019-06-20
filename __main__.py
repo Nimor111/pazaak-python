@@ -1,4 +1,4 @@
-from board import Board
+from board import TicTacBoard
 from state import State
 from player import Player
 from node import Node
@@ -6,7 +6,7 @@ from mcts import Mcts
 
 
 def main():
-    b = Board()
+    b = TicTacBoard()
 
     state = State(board=b, player=Player(1))
 

@@ -3,7 +3,7 @@ from random import choice
 from dataclasses import dataclass, field
 
 from player import Player
-from board import Board
+from core.board import Board
 
 
 @dataclass
@@ -18,7 +18,7 @@ class State:
         all_states = []
 
         for position in empty_positions:
-            all_states.append(State(board=Board(self.board.move_new(position, player)), player=player))
+            all_states.append(State(board=self.board.move_new(position, player), player=player))
 
         return all_states
 

@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 
 from player import Player
-from board import Board
 from state import State
 from node import Node
 from uct import best_uct
+import constants
 
 
 @dataclass
@@ -15,7 +15,7 @@ class Mcts:
         self.root.state.toggle_player()
         for _ in range(simulations):
             selected = self.select(self.root)
-            if selected.state.board.status() == -1:
+            if selected.state.board.status() == constants.IN_PROGRESS:
                 self.expand_node(selected, selected.state.player)
             node_to_explore = selected
             if len(selected.children) > 0:
@@ -46,7 +46,7 @@ class Mcts:
         while temp is not None:
             temp.state.visit_score += 1
             if temp.state.player == player:
-                temp.state.win_score += 10
+                temp.state.win_score += constants.WIN_SCORE
 
             temp = temp.parent
 
@@ -55,10 +55,10 @@ class Mcts:
 
         board_status = curr.state.board.status()
 
-        while board_status == -1:
+        while board_status == constants.IN_PROGRESS:
             curr.state.player.toggle_player()
             new_board = curr.state.random_play()
-            curr = Node(state=State(board=Board(board=new_board), player=curr.state.player))
+            curr = Node(state=State(board=new_board, player=curr.state.player))
             board_status = curr.state.board.status()
 
         return board_status
