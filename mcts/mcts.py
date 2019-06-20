@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 
-from player import Player
-from state import State
-from node import Node
-from uct import best_uct
-import constants
+import core.constants as constants
+from core.player import Player
+
+from mcts.node import Node
+from mcts.uct import best_uct
 
 
 @dataclass
@@ -57,8 +57,8 @@ class Mcts:
 
         while board_status == constants.IN_PROGRESS:
             curr.state.player.toggle_player()
-            new_board = curr.state.random_play()
-            curr = Node(state=State(board=new_board, player=curr.state.player))
+            new_state = curr.state.random_play()
+            curr = Node(state=new_state)
             board_status = curr.state.board.status()
 
         return board_status

@@ -4,7 +4,7 @@ from operator import attrgetter
 
 from dataclasses import dataclass, field
 
-from state import State
+from core.state import State
 
 
 @dataclass

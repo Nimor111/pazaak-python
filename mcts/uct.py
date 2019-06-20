@@ -1,6 +1,6 @@
 import math
 
-from node import Node
+from mcts.node import Node
 
 
 def best_uct(node: Node):

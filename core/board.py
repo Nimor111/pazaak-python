@@ -3,9 +3,9 @@ import operator
 from typing import List
 
 from dataclasses import dataclass, field
-import constants
 
-from player import Player
+import core.constants as constants
+from core.player import Player
 
 
 @dataclass

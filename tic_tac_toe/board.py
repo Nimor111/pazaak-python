@@ -1,24 +1,22 @@
-import operator
-
 from copy import deepcopy
 
 from dataclasses import dataclass
 
-from player import Player
-import constants
+from tic_tac_toe.player import TicTacPlayer
+import core.constants as constants
 
 from core.board import Board, Position
 
 
 @dataclass
 class TicTacBoard(Board):
-    def move_new(self, position: Position, player: Player):
+    def move_new(self, position: Position, player: TicTacPlayer):
         newBoard = deepcopy(self.board)
         newBoard[position.x][position.y] = player.player
 
         return TicTacBoard(board=newBoard)
 
-    def move(self, position: Position, player: Player):
+    def move(self, position: Position, player: TicTacPlayer):
         self.board[position.x][position.y] = player.player
 
     def empty_positions(self):

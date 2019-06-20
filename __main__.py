@@ -1,14 +1,15 @@
-from board import TicTacBoard
-from state import State
-from player import Player
-from node import Node
-from mcts import Mcts
+from tic_tac_toe.board import TicTacBoard
+from tic_tac_toe.state import TicTacState
+from tic_tac_toe.player import TicTacPlayer
+
+from mcts.node import Node
+from mcts.mcts import Mcts
 
 
 def main():
     b = TicTacBoard()
 
-    state = State(board=b, player=Player(1))
+    state = TicTacState(board=b, player=TicTacPlayer(1))
 
     while b.status() == -1:
         node = Node(state=state)
@@ -16,7 +17,7 @@ def main():
 
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
         b = tree.find_next_move(7000)
-        state = State(board=b, player=state.player)
+        state = TicTacState(board=b, player=state.player)
         print("TURN\n")
         b.print()
 
