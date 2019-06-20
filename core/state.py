@@ -18,4 +18,4 @@ class State:
         raise NotImplementedError
 
     def toggle_player(self):
-        raise NotImplementedError
+        self.player = self.player.toggle_player()
