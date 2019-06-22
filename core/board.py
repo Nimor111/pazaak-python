@@ -23,10 +23,10 @@ class Board:
             [constants.EMPTY, constants.EMPTY, constants.EMPTY]
         ])
 
-    def move_new(self, position: Position, player: Player):
+    def move_new(self, position: Position, player: Player, *args, **kwargs):
         raise NotImplementedError
 
-    def move(self, position: Position, player: Player):
+    def move(self, position: Position, player: Player, *args, **kwargs):
         raise NotImplementedError
 
     def print(self):
@@ -38,7 +38,7 @@ class Board:
     def full(self):
         return not any(map(lambda x: x == constants.EMPTY, reduce(operator.iconcat, self.board, [])))
 
-    def empty_positions(self):
+    def empty_positions(self, player: Player = 0):
         raise NotImplementedError
 
     def status(self):
