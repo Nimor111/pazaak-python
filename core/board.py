@@ -35,7 +35,7 @@ class Board:
                 print(str(col), end=' ')
             print()
 
-    def full(self):
+    def full(self, *args, **kwargs):
         return not any(map(lambda x: x == constants.EMPTY, reduce(operator.iconcat, self.board, [])))
 
     def empty_positions(self, player: Player = 0):

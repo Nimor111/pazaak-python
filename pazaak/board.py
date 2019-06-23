@@ -48,14 +48,10 @@ class PazaakBoard(Board):
             return self._empty_positions_by_player(len(self.board) // 2, len(self.board))
 
     def _empty_positions_by_player(self, start: int, end: int):
-        positions = []
-
         for row in range(start, end):
             for col in range(len(self.board) // 2):
                 if self.board[row][col] == constants.EMPTY:
-                    positions.append(Position(row, col))
-
-        return positions
+                    return Position(row, col)
 
     def print(self):
         board_string = ''
@@ -88,6 +84,7 @@ class PazaakBoard(Board):
     def _full(self, start, end):
         return not any(map(lambda x: x == constants.EMPTY, reduce(operator.iconcat, self.board[start:end], [])))
 
+    # TODO handle case when someone has a stand
     def status(self):
         board_size = len(self.board)
 

@@ -6,6 +6,7 @@ from core.board import Position
 
 from pazaak.board import PazaakBoard
 from pazaak.player import Card, PazaakPlayer
+from pazaak.state import PazaakState
 
 from mcts.node import Node
 from mcts.mcts import Mcts
@@ -22,21 +23,22 @@ def pazaak():
 def tic_tac_toe():
     b = TicTacBoard()
 
-    state = TicTacState(board=b, player=TicTacPlayer(1))
+    players = [TicTacPlayer(1), TicTacPlayer(2)]
+    state = TicTacState(board=b, player=players[0], players=players)
 
     while b.status() == -1:
         node = Node(state=state)
         tree = Mcts(root=node)
 
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
-        b = tree.find_next_move(7000)
-        state = TicTacState(board=b, player=state.player)
+        b = tree.find_next_move(100)
+        state = TicTacState(board=b, player=state.player, players=state.players, player_index=state.player_index)
         print("TURN\n")
         b.print()
 
 
 def main():
-    pazaak()
+    tic_tac_toe()
 
 
 if __name__ == "__main__":

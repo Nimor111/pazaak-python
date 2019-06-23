@@ -11,10 +11,10 @@ from core.board import Board, Position
 @dataclass
 class TicTacBoard(Board):
     def move_new(self, position: Position, player: TicTacPlayer):
-        newBoard = deepcopy(self.board)
-        newBoard[position.x][position.y] = player.player
+        new_board = deepcopy(self.board)
+        new_board[position.x][position.y] = player.player
 
-        return TicTacBoard(board=newBoard)
+        return TicTacBoard(board=new_board)
 
     def move(self, position: Position, player: TicTacPlayer):
         self.board[position.x][position.y] = player.player

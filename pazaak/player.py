@@ -1,3 +1,4 @@
+from typing import List
 from dataclasses import dataclass, field
 
 from core.player import Player
@@ -10,5 +11,17 @@ class Card:
 
 @dataclass
 class PazaakPlayer(Player):
+    stand: bool = field(default=False)
+    side_deck: List[Card] = field(default=list)
+
     def toggle_player(self):
-        return PazaakPlayer(player=3 - self.player)
+        if not self.stand:
+            return PazaakPlayer(player=3-self.player)
+
+        return self
+
+    def toggle_player_new(self, player: 'PazaakPlayer'):
+        if not self.stand:
+            return PazaakPlayer(player=player)
+
+        return self

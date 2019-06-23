@@ -4,7 +4,7 @@ import core.constants as constants
 from core.player import Player
 
 from mcts.node import Node
-from mcts.uct import best_uct
+from mcts.ucb import best_ucb
 
 
 @dataclass
@@ -30,23 +30,26 @@ class Mcts:
         best = self.root
 
         while len(best.children) != 0:
-            best = best_uct(best)
+            best = best_ucb(best)
 
         return best
 
     def expand_node(self, node: Node, player: Player):
-        player = player.toggle_player()
+        player = node.state.toggle_player_new()
         possible_states = node.state.get_all_states(player)
 
         for state in possible_states:
             node.children.append(Node(state=state, parent=node))
 
-    def backpropagate(self, node: Node, player: Player):
+    def backpropagate(self, node: Node, result: int):
         temp = node
         while temp is not None:
             temp.state.visit_score += 1
-            if temp.state.player == player:
+            if temp.state.player == result:
                 temp.state.win_score += constants.WIN_SCORE
+
+            if result == constants.DRAW:
+                temp.state.win_score += constants.WIN_SCORE // 2
 
             temp = temp.parent
 
@@ -56,7 +59,7 @@ class Mcts:
         board_status = curr.state.board.status()
 
         while board_status == constants.IN_PROGRESS:
-            curr.state.player.toggle_player()
+            curr.state.player = curr.state.toggle_player_new()
             new_state = curr.state.random_play()
             curr = Node(state=new_state)
             board_status = curr.state.board.status()
