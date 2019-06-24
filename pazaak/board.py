@@ -25,21 +25,21 @@ class PazaakBoard(Board):
         ])
 
     def move_new(self, position: Position, player: PazaakPlayer, *args, **kwargs):
+        if player.stand:
+            return PazaakBoard(board=self.board)
+
         new_board = deepcopy(self.board)
         card = kwargs.get('card')
-        if player.player == constants.PLAYER:
-            new_board[position.x][position.y] = card.score
-        elif player.player == constants.OPPONENT:
-            new_board[position.x + len(new_board) // 2][position.y] = card.score
+        new_board[position.x][position.y] = card.score
 
         return PazaakBoard(board=new_board)
 
     def move(self, position: Position, player: PazaakPlayer, *args, **kwargs):
+        if player.stand:
+            return PazaakBoard(board=self.board)
+
         card = kwargs.get('card')
-        if player.player == constants.PLAYER:
-            self.board[position.x][position.y] = card.score
-        elif player.player == constants.OPPONENT:
-            self.board[position.x + len(self.board) // 2 - 1][position.y] = card.score
+        self.board[position.x][position.y] = card.score
 
     def empty_positions(self, player: PazaakPlayer):
         if player.player == constants.PLAYER:
@@ -81,7 +81,7 @@ class PazaakBoard(Board):
         elif player == constants.OPPONENT:
             return self._full(len(self.board) // 2, len(self.board))
 
-    def _full(self, start, end):
+    def _full(self, start: int, end: int):
         return not any(map(lambda x: x == constants.EMPTY, reduce(operator.iconcat, self.board[start:end], [])))
 
     # TODO handle case when someone has a stand
@@ -93,12 +93,6 @@ class PazaakBoard(Board):
 
         if player_score == constants.END_SCORE and opponent_score == constants.END_SCORE:
             return constants.DRAW
-
-        if player_score == constants.END_SCORE:
-            return constants.PLAYER
-
-        if opponent_score == constants.END_SCORE:
-            return constants.OPPONENT
 
         if player_score > constants.END_SCORE:
             return constants.OPPONENT

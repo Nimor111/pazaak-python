@@ -17,4 +17,7 @@ class Node:
         return choice(self.children)
 
     def max_visited_child(self):
-        return max(self.children, key=attrgetter('state.visit_score'))
+        if len(self.children) > 0:
+            return max(self.children, key=attrgetter('state.visit_score'))
+
+        return self

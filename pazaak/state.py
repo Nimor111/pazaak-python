@@ -2,7 +2,6 @@ from random import choice
 from dataclasses import dataclass
 
 from core.state import State
-from core.player import Player
 
 from pazaak.player import PazaakPlayer, Card
 
@@ -13,20 +12,46 @@ class PazaakState(State):
         position = self.board.empty_positions(player)
         all_states = []
 
-        for card in player.cards:
-            all_states.append(PazaakState(board=self.board.move_new(position, player, card=card)), player=player)
+        for card in player.side_deck:
+            all_states.append(
+                PazaakState(
+                    board=self.board.move_new(position, player, card=card),
+                    player=player,
+                    players=self.players,
+                    player_index=player.player - 1
+                )
+            )
 
         # stand
-        new_player = Player(player=player.player, stand=True)
-        all_states.append(PazaakState(board=self.board, player=new_player))
+        new_player = PazaakPlayer(player=player.player, stand=True, side_deck=player.side_deck)
+        all_states.append(
+            PazaakState(
+                board=self.board,
+                player=new_player,
+                players=self.players,
+                player_index=player.player - 1
+            )
+        )
 
         # end turn without doing anything
-        all_states.append(PazaakState(board=self.board, player=player))
+        all_states.append(
+            PazaakState(
+                board=self.board,
+                player=player,
+                players=self.players,
+                player_index=player.player - 1
+            )
+        )
 
         return all_states
 
-    def random_card(self, player):
+    def random_card(self):
         card = Card(score=choice(range(1, 11)))
-        position = self.board.empty_positions(player)
+        position = self.board.empty_positions(self.player)
 
-        return PazaakState(board=self.board.move_new(position, player, card=card), player=player)
+        return PazaakState(
+            board=self.board.move_new(position, self.player, card=card),
+            players=self.players,
+            player=self.player,
+            player_index=self.player_index
+        )

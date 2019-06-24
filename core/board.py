@@ -38,7 +38,7 @@ class Board:
     def full(self, *args, **kwargs):
         return not any(map(lambda x: x == constants.EMPTY, reduce(operator.iconcat, self.board, [])))
 
-    def empty_positions(self, player: Player = 0):
+    def empty_positions(self, player: Player):
         raise NotImplementedError
 
     def status(self):

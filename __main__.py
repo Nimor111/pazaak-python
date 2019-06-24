@@ -1,8 +1,8 @@
+from random import choice
+
 from tic_tac_toe.board import TicTacBoard
 from tic_tac_toe.state import TicTacState
 from tic_tac_toe.player import TicTacPlayer
-
-from core.board import Position
 
 from pazaak.board import PazaakBoard
 from pazaak.player import Card, PazaakPlayer
@@ -14,10 +14,32 @@ from mcts.mcts import Mcts
 
 def pazaak():
     b = PazaakBoard()
+    player_side_deck = [Card(x) for x in [choice(range(1, 7)) for _ in range(4)]]
+    opponent_side_deck = [Card(x) for x in [choice(range(1, 7)) for _ in range(4)]]
 
-    b = b.move_new(Position(0, 0), PazaakPlayer(player=2), card=Card(5))
-    print(b.status())
-    b.print()
+    players = [
+        PazaakPlayer(player=1, side_deck=player_side_deck),
+        PazaakPlayer(player=2, side_deck=opponent_side_deck)
+    ]
+
+    state = PazaakState(
+        board=b,
+        players=players,
+        player=players[0]
+    )
+
+    while b.status() == -1:
+        state = state.random_card()
+        node = Node(state=state)
+        tree = Mcts(root=node)
+
+        # __import__('ipdb').set_trace()
+
+        print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
+        b = tree.find_next_move(100)
+        state = PazaakState(board=b, player=state.player, players=state.players, player_index=state.player_index)
+        print("TURN\n")
+        b.print()
 
 
 def tic_tac_toe():
@@ -31,6 +53,7 @@ def tic_tac_toe():
         tree = Mcts(root=node)
 
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
+        __import__('ipdb').set_trace()
         b = tree.find_next_move(100)
         state = TicTacState(board=b, player=state.player, players=state.players, player_index=state.player_index)
         print("TURN\n")
@@ -38,7 +61,7 @@ def tic_tac_toe():
 
 
 def main():
-    tic_tac_toe()
+    pazaak()
 
 
 if __name__ == "__main__":
