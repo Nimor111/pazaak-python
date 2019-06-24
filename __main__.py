@@ -33,8 +33,6 @@ def pazaak():
         node = Node(state=state)
         tree = Mcts(root=node)
 
-        # __import__('ipdb').set_trace()
-
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
         b = tree.find_next_move(100)
         state = PazaakState(board=b, player=state.player, players=state.players, player_index=state.player_index)
@@ -53,7 +51,6 @@ def tic_tac_toe():
         tree = Mcts(root=node)
 
         print(">>>>> CURR PLAYER: <<<<<<<", state.player.player)
-        __import__('ipdb').set_trace()
         b = tree.find_next_move(100)
         state = TicTacState(board=b, player=state.player, players=state.players, player_index=state.player_index)
         print("TURN\n")
