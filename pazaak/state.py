@@ -55,3 +55,7 @@ class PazaakState(State):
             player=self.player,
             player_index=self.player_index
         )
+
+    def random_play(self):
+        self.state = self.random_card()
+        return choice(self.get_all_states(self.player))
