@@ -1,0 +1,13 @@
+<div class="col-sm-4" style="margin-top: 1rem;">
+  {% for row in board %}
+  <div class="row">
+    {% for col in row %}
+    <div class="card" style="width: 6rem;">
+      <div class="card-body">
+        <center>{{ col }}</center>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
