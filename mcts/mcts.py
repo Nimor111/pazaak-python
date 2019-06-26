@@ -59,7 +59,6 @@ class Mcts:
         board_status = curr.state.board.status(players=self.root.state.players)
 
         while board_status == constants.IN_PROGRESS:
-            # __import__('ipdb').set_trace()
             curr.state.player = curr.state.toggle_player_new()
             new_state = curr.state.random_play()
             curr = Node(state=new_state)
