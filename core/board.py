@@ -41,5 +41,5 @@ class Board:
     def empty_positions(self, player: Player):
         raise NotImplementedError
 
-    def status(self):
+    def status(self, **kwargs):
         raise NotImplementedError

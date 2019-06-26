@@ -28,8 +28,10 @@ def pazaak():
         player=players[0]
     )
 
-    while b.status() == -1:
-        state = state.random_card()
+    while b.status(players=state.players) == -1:
+        if not state.player.stand:
+            state = state.random_card()
+
         node = Node(state=state)
         tree = Mcts(root=node)
 

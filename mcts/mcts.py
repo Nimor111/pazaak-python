@@ -15,7 +15,7 @@ class Mcts:
         self.root.state.toggle_player()
         for _ in range(simulations):
             selected = self.select(self.root)
-            if selected.state.board.status() == constants.IN_PROGRESS:
+            if selected.state.board.status(players=self.root.state.players) == constants.IN_PROGRESS:
                 self.expand_node(selected, selected.state.player)
             node_to_explore = selected
             if len(selected.children) > 0:
@@ -56,12 +56,13 @@ class Mcts:
     def simulate(self, node: Node):
         curr = node
 
-        board_status = curr.state.board.status()
+        board_status = curr.state.board.status(players=self.root.state.players)
 
         while board_status == constants.IN_PROGRESS:
+            # __import__('ipdb').set_trace()
             curr.state.player = curr.state.toggle_player_new()
             new_state = curr.state.random_play()
             curr = Node(state=new_state)
-            board_status = curr.state.board.status()
+            board_status = curr.state.board.status(players=curr.state.players)
 
         return board_status
