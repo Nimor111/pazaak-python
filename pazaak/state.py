@@ -1,5 +1,3 @@
-from functools import reduce
-import operator
 from random import choice
 from dataclasses import dataclass
 
