@@ -1,5 +1,6 @@
 import os
 from flask import Flask, jsonify
+from flask_cors import CORS
 from random import choice
 
 from pazaak.board import PazaakBoard
@@ -11,6 +12,7 @@ from mcts.mcts import Mcts
 
 app = Flask(__name__)
 port = int(os.getenv('PORT', 3000))
+CORS(app)
 
 
 def init_game():
