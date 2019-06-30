@@ -22,6 +22,7 @@ The game ends when any player has won two out of three sets. Each set is won in 
 * A player has > 20 points - the other player wins
 * A player's board is full - the player with the most score wins
 
+### How the game looks originally
 ![pazaak.png](https://vignette.wikia.nocookie.net/starwars/images/6/60/Pazaak%28KOTOR2%29.jpg/revision/latest?cb=20060504165658)
 
 ## AI
